@@ -2,7 +2,12 @@
   <div>
     <article v-if='item'>
       <h1>{{ item.attributes.canonicalTitle }}</h1>
-      <img :src='item.attributes.posterImage.large'>
+      <table>
+        <tr>
+          <td><img :src='item.attributes.posterImage.medium'></td>
+          <td>{{ item.attributes.synopsis }}</td>
+        </tr>
+      </table>
     </article>
   </div>
 </template>
@@ -11,6 +16,12 @@
   import { mapState } from 'vuex'
   export default {
     name: 'Item',
+
+    head() {
+      return {
+        title: this.item && this.item.attributes.canonicalTitle
+      }
+    },
 
     asyncData({ store, route }) {
       return store.dispatch('fetchItem', { id: route.params.id })
