@@ -1,4 +1,13 @@
+const axios = require('axios')
+
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/nuxt-helloworld-static/'
+  }
+} : {}
+
 module.exports = {
+  ...routerBase,
   /*
   ** Headers of the page
   */
@@ -20,6 +29,19 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
   ],
+  generate: {
+    routes: function () {
+      return axios.get('https://kitsu.io/api/edge/anime')
+        .then((res) => {
+          return res.data.data.map((item) => {
+            return {
+              route: '/' + item.id,
+              payload: item
+            }
+          })
+        })
+    }
+  },
   /*
   ** Build configuration
   */
