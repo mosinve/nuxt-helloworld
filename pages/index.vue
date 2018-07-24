@@ -16,7 +16,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'Index',
 
-  asyncData({ store }) {
+  fetch({ store }) {
     return store.dispatch('fetchList')
   },
 

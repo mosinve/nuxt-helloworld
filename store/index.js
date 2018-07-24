@@ -7,8 +7,6 @@ export const state = () => ({
 
 export const actions = {
   async fetchList ({ commit }, { filters } = {}) {
-    // возвращаем Promise через `store.dispatch()`
-    // чтобы мы могли понять когда данные будут загружены
     const { data: { data: items} } = await api.getList({ filters })
     commit('setItems', { items })
   },
